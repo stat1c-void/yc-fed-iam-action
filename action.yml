@@ -1,0 +1,17 @@
+name: "Yandex Cloud Federated IAM Token"
+description: "Get Yandex Cloud IAM token through service account federation"
+inputs:
+  service-account:
+    description: "Yandex Cloud service account ID"
+    required: true
+  audience:
+    description: "GitHub ID-token custom audience value"
+    required: false
+outputs:
+  token:
+    description: "Yandex IAM token"
+  expires-in:
+    description: "Remaining token time-to-live (seconds)"
+runs:
+  using: "node20"
+  main: "main.js"

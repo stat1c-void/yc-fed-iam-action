@@ -1,0 +1,9 @@
+{
+  "name": "yc-fed-iam-action",
+  "packageManager": "yarn@4.8.1",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/http-client": "^2.2.3",
+    "banditypes": "^0.2.5"
+  }
+}
