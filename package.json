@@ -1,9 +1,53 @@
 {
   "name": "yc-fed-iam-action",
+  "description": "Get Yandex Cloud IAM token through service account federation",
+  "version": "0.0.1",
+  "author": "stat1c-void",
+  "type": "module",
+  "private": true,
+  "homepage": "https://github.com/stat1c-void/yc-fed-iam-action",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stat1c-void/yc-fed-iam-action.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stat1c-void/yc-fed-iam-action/issues"
+  },
+  "keywords": [
+    "actions",
+    "yandex",
+    "yandex-cloud",
+    "federation"
+  ],
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "scripts": {
+    "format:write": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "package": "rollup --config rollup.config.js"
+  },
   "packageManager": "yarn@4.8.1",
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@actions/http-client": "^2.2.3",
     "banditypes": "^0.2.5"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.2.8",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "eslint": "^9.24.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.6",
+    "prettier": "^3.5.3",
+    "prettier-eslint": "^16.3.0",
+    "rollup": "^4.39.0"
   }
 }
