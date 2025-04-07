@@ -49,5 +49,8 @@
     "prettier": "^3.5.3",
     "prettier-eslint": "^16.3.0",
     "rollup": "^4.39.0"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.39.0"
   }
 }

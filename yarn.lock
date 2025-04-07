@@ -496,7 +496,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-x64-gnu@npm:4.39.0":
+"@rollup/rollup-linux-x64-gnu@npm:4.39.0, @rollup/rollup-linux-x64-gnu@npm:^4.39.0":
   version: 4.39.0
   resolution: "@rollup/rollup-linux-x64-gnu@npm:4.39.0"
   conditions: os=linux & cpu=x64 & libc=glibc
@@ -3980,6 +3980,7 @@ __metadata:
     "@eslint/compat": "npm:^1.2.8"
     "@rollup/plugin-commonjs": "npm:^28.0.3"
     "@rollup/plugin-node-resolve": "npm:^16.0.1"
+    "@rollup/rollup-linux-x64-gnu": "npm:^4.39.0"
     banditypes: "npm:^0.2.5"
     eslint: "npm:^9.24.0"
     eslint-config-prettier: "npm:^10.1.1"
@@ -3988,6 +3989,9 @@ __metadata:
     prettier: "npm:^3.5.3"
     prettier-eslint: "npm:^16.3.0"
     rollup: "npm:^4.39.0"
+  dependenciesMeta:
+    "@rollup/rollup-linux-x64-gnu":
+      optional: true
   languageName: unknown
   linkType: soft
 
