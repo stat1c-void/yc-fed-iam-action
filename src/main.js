@@ -1,9 +1,9 @@
 // @ts-check
-const core = require("@actions/core");
-const http = require("@actions/http-client");
-const bt = require("banditypes");
+import * as core from "@actions/core";
+import { HttpClient, MediaTypes } from "@actions/http-client";
+import * as bt from "banditypes";
 
-async function main() {
+export default async function main() {
   try {
     const serviceAccountId = core.getInput("service-account", {
       required: true,
@@ -30,8 +30,6 @@ async function main() {
   }
 }
 
-module.exports = main;
-
 /**
  * @typedef TokenResponse
  * @type {object}
@@ -45,7 +43,7 @@ module.exports = main;
  * @returns {Promise<TokenResponse>}
  */
 async function getYcIamToken(idToken, servAccId) {
-  const client = new http.HttpClient();
+  const client = new HttpClient();
 
   const reqParams = {
     grant_type: "urn:ietf:params:oauth:grant-type:token-exchange",
@@ -60,7 +58,7 @@ async function getYcIamToken(idToken, servAccId) {
     "https://auth.yandex.cloud/oauth/token",
     reqBody,
     {
-      accept: http.MediaTypes.ApplicationJson,
+      accept: MediaTypes.ApplicationJson,
       "content-type": "application/x-www-form-urlencoded",
     }
   );
@@ -103,7 +101,6 @@ Yandex error schema (status != 200):
 {"error_description": "...", "error": "invalid_request"}
 */
 
-/** @type {(v: unknown) => { error: string, error_description: string }} */
 const validateError = bt.object({
   error: bt.string(),
   error_description: bt.string(),
@@ -128,7 +125,6 @@ Yandex success schema:
 {"access_token": "...", "token_type": "Bearer", "expires_in": 43200}
 */
 
-/** @type {(v: unknown) => { access_token: string, expires_in: number }} */
 const validateResponse = bt.object({
   access_token: bt.string(),
   expires_in: bt.number(),

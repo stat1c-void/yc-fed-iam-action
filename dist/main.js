@@ -30,10 +30,6 @@ import require$$6$1 from 'timers';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function getDefaultExportFromCjs (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
 var core = {};
 
 var command = {};
@@ -3257,11 +3253,11 @@ function requireUrlencoded () {
 	return urlencoded;
 }
 
-var hasRequiredMain$1;
+var hasRequiredMain;
 
-function requireMain$1 () {
-	if (hasRequiredMain$1) return main$1.exports;
-	hasRequiredMain$1 = 1;
+function requireMain () {
+	if (hasRequiredMain) return main$1.exports;
+	hasRequiredMain = 1;
 
 	const WritableStream = require$$0$7.Writable;
 	const { inherits } = require$$1$2;
@@ -6647,7 +6643,7 @@ function requireBody () {
 	if (hasRequiredBody) return body;
 	hasRequiredBody = 1;
 
-	const Busboy = requireMain$1();
+	const Busboy = requireMain();
 	const util = requireUtil$6();
 	const {
 	  ReadableStreamFrom,
@@ -27248,248 +27244,167 @@ function requireCore () {
 	return core;
 }
 
-var cjs = {};
+var coreExports = requireCore();
 
-var hasRequiredCjs;
+var libExports = requireLib();
 
-function requireCjs () {
-	if (hasRequiredCjs) return cjs;
-	hasRequiredCjs = 1;
-	(function (exports) {
-		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.lazy = exports.map = exports.set = exports.tuple = exports.array = exports.objectLoose = exports.object = exports.record = exports.instance = exports.nullable = exports.optional = exports.func = exports.boolean = exports.number = exports.string = exports.like = exports.enums = exports.unknown = exports.never = exports.fail = exports.banditype = void 0;
-		// Core
-		const banditype = (cast) => {
-		    cast.map = (extra) => (0, exports.banditype)((raw) => extra(cast(raw)));
-		    cast.or = (extra) => (0, exports.banditype)((raw) => {
-		        try {
-		            return cast(raw);
-		        }
-		        catch (err) {
-		            return extra(raw);
-		        }
-		    });
-		    return cast;
-		};
-		exports.banditype = banditype;
-		// Error helper
-		const fail = () => "bad banditype"();
-		exports.fail = fail;
-		const never = () => (0, exports.banditype)(() => (0, exports.fail)());
-		exports.never = never;
-		const unknown = () => (0, exports.banditype)((raw) => raw);
-		exports.unknown = unknown;
-		const enums = (items) => (0, exports.banditype)((raw) => items.includes(raw) ? raw : (0, exports.fail)());
-		exports.enums = enums;
-		exports.like = ((tag) => (0, exports.banditype)((raw) => (typeof raw === typeof tag ? raw : (0, exports.fail)())));
-		const string = () => (0, exports.like)("");
-		exports.string = string;
-		const number = () => (0, exports.like)(0);
-		exports.number = number;
-		const boolean = () => (0, exports.like)(true);
-		exports.boolean = boolean;
-		const func = () => (0, exports.like)(exports.fail);
-		exports.func = func;
-		const optional = () => (0, exports.like)();
-		exports.optional = optional;
-		const nullable = () => (0, exports.banditype)((raw) => (raw === null ? raw : (0, exports.fail)()));
-		exports.nullable = nullable;
-		// Classes
-		const instance = (proto) => (0, exports.banditype)((raw) => (raw instanceof proto ? raw : (0, exports.fail)()));
-		exports.instance = instance;
-		// objects
-		const record = (castValue) => (0, exports.instance)(Object).map((raw) => {
-		    const res = {};
-		    for (const key in raw) {
-		        const f = castValue(raw[key]);
-		        f !== undefined && (res[key] = f);
-		    }
-		    return res;
-		});
-		exports.record = record;
-		const object = (schema) => (0, exports.instance)(Object).map((raw) => {
-		    const res = {};
-		    for (const key in schema) {
-		        const f = schema[key](raw[key]);
-		        f !== undefined && (res[key] = f);
-		    }
-		    return res;
-		});
-		exports.object = object;
-		const objectLoose = (schema) => (0, exports.instance)(Object).map((raw) => {
-		    const res = { ...raw };
-		    for (const key in schema) {
-		        const f = schema[key](raw[key]);
-		        f !== undefined && (res[key] = f);
-		    }
-		    return res;
-		});
-		exports.objectLoose = objectLoose;
-		// arrays
-		const array = (castItem) => (0, exports.instance)(Array).map((arr) => arr.map(castItem));
-		exports.array = array;
-		const tuple = (schema) => (0, exports.instance)(Array).map((arr) => {
-		    return schema.map((cast, i) => cast(arr[i]));
-		});
-		exports.tuple = tuple;
-		const set = (castItem) => (0, exports.instance)(Set).map((set) => new Set([...set].map(castItem)));
-		exports.set = set;
-		const map = (castKey, castValue) => (0, exports.instance)(Map).map((map) => {
-		    return new Map([...map].map(([k, v]) => [castKey(k), castValue(v)]));
-		});
-		exports.map = map;
-		const lazy = (cast) => (0, exports.banditype)((raw) => cast()(raw));
-		exports.lazy = lazy; 
-	} (cjs));
-	return cjs;
+// Core
+const banditype = (cast) => {
+    cast.map = (extra) => banditype((raw) => extra(cast(raw)));
+    cast.or = (extra) => banditype((raw) => {
+        try {
+            return cast(raw);
+        }
+        catch (err) {
+            return extra(raw);
+        }
+    });
+    return cast;
+};
+// Error helper
+const fail = () => "bad banditype"();
+const like = ((tag) => banditype((raw) => (typeof raw === typeof tag ? raw : fail())));
+const string = () => like("");
+const number = () => like(0);
+// Classes
+const instance = (proto) => banditype((raw) => (raw instanceof proto ? raw : fail()));
+const object = (schema) => instance(Object).map((raw) => {
+    const res = {};
+    for (const key in schema) {
+        const f = schema[key](raw[key]);
+        f !== undefined && (res[key] = f);
+    }
+    return res;
+});
+
+// @ts-check
+
+async function main() {
+  try {
+    const serviceAccountId = coreExports.getInput("service-account", {
+      required: true,
+    });
+    const audience = coreExports.getInput("audience");
+
+    let idToken;
+    try {
+      idToken = await coreExports.getIDToken(audience);
+    } catch (err) {
+      coreExports.error(
+        "Error getting GitHub ID-token. Did you forget the permission (id-token: write)?"
+      );
+      throw err;
+    }
+
+    const tokenData = await getYcIamToken(idToken, serviceAccountId);
+
+    coreExports.setOutput("token", tokenData.token);
+    coreExports.setOutput("expires-in", tokenData.expiresIn);
+    coreExports.setSecret(tokenData.token);
+  } catch (error) {
+    coreExports.setFailed(String(error));
+  }
 }
 
-var main_1;
-var hasRequiredMain;
+/**
+ * @typedef TokenResponse
+ * @type {object}
+ * @property {string} token
+ * @property {number} expiresIn
+ */
 
-function requireMain () {
-	if (hasRequiredMain) return main_1;
-	hasRequiredMain = 1;
-	// @ts-check
-	const core = requireCore();
-	const http = requireLib();
-	const bt = /*@__PURE__*/ requireCjs();
+/**
+ * @param {string} idToken
+ * @param {string} servAccId
+ * @returns {Promise<TokenResponse>}
+ */
+async function getYcIamToken(idToken, servAccId) {
+  const client = new libExports.HttpClient();
 
-	async function main() {
-	  try {
-	    const serviceAccountId = core.getInput("service-account", {
-	      required: true,
-	    });
-	    const audience = core.getInput("audience");
+  const reqParams = {
+    grant_type: "urn:ietf:params:oauth:grant-type:token-exchange",
+    requested_token_type: "urn:ietf:params:oauth:token-type:access_token",
+    audience: servAccId,
+    subject_token: idToken,
+    subject_token_type: "urn:ietf:params:oauth:token-type:id_token",
+  };
+  const reqBody = new URLSearchParams(reqParams).toString();
 
-	    let idToken;
-	    try {
-	      idToken = await core.getIDToken(audience);
-	    } catch (err) {
-	      core.error(
-	        "Error getting GitHub ID-token. Did you forget the permission (id-token: write)?",
-	      );
-	      throw err;
-	    }
+  const resp = await client.post(
+    "https://auth.yandex.cloud/oauth/token",
+    reqBody,
+    {
+      accept: libExports.MediaTypes.ApplicationJson,
+      "content-type": "application/x-www-form-urlencoded",
+    }
+  );
+  const body = await resp.readBody();
 
-	    const tokenData = await getYcIamToken(idToken, serviceAccountId);
+  if (resp.message.statusCode !== 200) {
+    const httpCode = resp.message.statusCode ?? "N/A";
+    const httpMsg = resp.message.statusMessage ?? "N/A";
+    const { errorCode, errorDesc } = parseError(body);
+    coreExports.error(
+      `IAM token request error: status=${httpCode}; statusMsg=${httpMsg};` +
+        ` errorCode=${errorCode}; errorDesc=${errorDesc}`
+    );
+    throw new Error(`IAM token request error (code ${httpCode}: ${errorDesc}`);
+  }
 
-	    core.setOutput("token", tokenData.token);
-	    core.setOutput("expires-in", tokenData.expiresIn);
-	    core.setSecret(tokenData.token);
-	  } catch (error) {
-	    core.setFailed(String(error));
-	  }
-	}
-
-	main_1 = main;
-
-	/**
-	 * @typedef TokenResponse
-	 * @type {object}
-	 * @property {string} token
-	 * @property {number} expiresIn
-	 */
-
-	/**
-	 * @param {string} idToken
-	 * @param {string} servAccId
-	 * @returns {Promise<TokenResponse>}
-	 */
-	async function getYcIamToken(idToken, servAccId) {
-	  const client = new http.HttpClient();
-
-	  const reqParams = {
-	    grant_type: "urn:ietf:params:oauth:grant-type:token-exchange",
-	    requested_token_type: "urn:ietf:params:oauth:token-type:access_token",
-	    audience: servAccId,
-	    subject_token: idToken,
-	    subject_token_type: "urn:ietf:params:oauth:token-type:id_token",
-	  };
-	  const reqBody = new URLSearchParams(reqParams).toString();
-
-	  const resp = await client.post(
-	    "https://auth.yandex.cloud/oauth/token",
-	    reqBody,
-	    {
-	      accept: http.MediaTypes.ApplicationJson,
-	      "content-type": "application/x-www-form-urlencoded",
-	    },
-	  );
-	  const body = await resp.readBody();
-
-	  if (resp.message.statusCode !== 200) {
-	    const httpCode = resp.message.statusCode ?? "N/A";
-	    const httpMsg = resp.message.statusMessage ?? "N/A";
-	    const { errorCode, errorDesc } = parseError(body);
-	    core.error(
-	      `IAM token request error: status=${httpCode}; statusMsg=${httpMsg};` +
-	        ` errorCode=${errorCode}; errorDesc=${errorDesc}`,
-	    );
-	    throw new Error(`IAM token request error (code ${httpCode}: ${errorDesc}`);
-	  }
-
-	  return parseResponse(body);
-	}
-
-	/**
-	 * @param {string} body
-	 * @returns {{ errorCode: string, errorDesc: string }}
-	 */
-	function parseError(body) {
-	  try {
-	    const data = validateError(JSON.parse(body));
-	    return { errorCode: data.error, errorDesc: data.error_description };
-	  } catch (err) {
-	    console.log("Error body is invalid:", body);
-	    return {
-	      errorCode: "parse_error",
-	      errorDesc: `Failed to parse error body: ${err}`,
-	    };
-	  }
-	}
-
-	/*
-	2025-04-03
-	Yandex error schema (status != 200):
-	{"error_description": "...", "error": "invalid_request"}
-	*/
-
-	/** @type {(v: unknown) => { error: string, error_description: string }} */
-	const validateError = bt.object({
-	  error: bt.string(),
-	  error_description: bt.string(),
-	});
-
-	/**
-	 * @param {string} body
-	 * @returns {TokenResponse}
-	 */
-	function parseResponse(body) {
-	  try {
-	    const data = validateResponse(JSON.parse(body));
-	    return { token: data.access_token, expiresIn: data.expires_in };
-	  } catch (err) {
-	    throw new Error(`Failed to parse response: ${err}`);
-	  }
-	}
-
-	/*
-	2025-04-03
-	Yandex success schema:
-	{"access_token": "...", "token_type": "Bearer", "expires_in": 43200}
-	*/
-
-	/** @type {(v: unknown) => { access_token: string, expires_in: number }} */
-	const validateResponse = bt.object({
-	  access_token: bt.string(),
-	  expires_in: bt.number(),
-	});
-	return main_1;
+  return parseResponse(body);
 }
 
-var mainExports = requireMain();
-var main = /*@__PURE__*/getDefaultExportFromCjs(mainExports);
+/**
+ * @param {string} body
+ * @returns {{ errorCode: string, errorDesc: string }}
+ */
+function parseError(body) {
+  try {
+    const data = validateError(JSON.parse(body));
+    return { errorCode: data.error, errorDesc: data.error_description };
+  } catch (err) {
+    console.log("Error body is invalid:", body);
+    return {
+      errorCode: "parse_error",
+      errorDesc: `Failed to parse error body: ${err}`,
+    };
+  }
+}
+
+/*
+2025-04-03
+Yandex error schema (status != 200):
+{"error_description": "...", "error": "invalid_request"}
+*/
+
+const validateError = object({
+  error: string(),
+  error_description: string(),
+});
+
+/**
+ * @param {string} body
+ * @returns {TokenResponse}
+ */
+function parseResponse(body) {
+  try {
+    const data = validateResponse(JSON.parse(body));
+    return { token: data.access_token, expiresIn: data.expires_in };
+  } catch (err) {
+    throw new Error(`Failed to parse response: ${err}`);
+  }
+}
+
+/*
+2025-04-03
+Yandex success schema:
+{"access_token": "...", "token_type": "Bearer", "expires_in": 43200}
+*/
+
+const validateResponse = object({
+  access_token: string(),
+  expires_in: number(),
+});
 
 export { main as default };
 //# sourceMappingURL=main.js.map
