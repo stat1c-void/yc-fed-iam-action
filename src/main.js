@@ -72,7 +72,7 @@ async function getYcIamToken(idToken, servAccId) {
       `IAM token request error: status=${httpCode}; statusMsg=${httpMsg};` +
         ` errorCode=${errorCode}; errorDesc=${errorDesc}`
     );
-    throw new Error(`IAM token request error (code ${httpCode}: ${errorDesc}`);
+    throw new Error(`IAM token request error (code ${httpCode}): ${errorDesc}`);
   }
 
   return parseResponse(body);
@@ -89,7 +89,7 @@ function parseError(body) {
   } catch (err) {
     console.log("Error body is invalid:", body);
     return {
-      errorCode: "parse_error",
+      errorCode: "malformed_error",
       errorDesc: `Failed to parse error body: ${err}`,
     };
   }

@@ -4,6 +4,7 @@ import { fixupPluginRules } from "@eslint/compat";
 import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
 import _import from "eslint-plugin-import";
+import jest from "eslint-plugin-jest";
 import prettier from "eslint-plugin-prettier";
 import globals from "globals";
 import path from "node:path";
@@ -21,10 +22,15 @@ export default [
   {
     ignores: ["**/coverage", "**/dist", "**/linter", "**/node_modules"],
   },
-  ...compat.extends("eslint:recommended", "plugin:prettier/recommended"),
+  ...compat.extends(
+    "eslint:recommended",
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended"
+  ),
   {
     plugins: {
       import: fixupPluginRules(_import),
+      jest,
       prettier,
     },
 
