@@ -14,4 +14,4 @@ outputs:
     description: "Remaining token time-to-live (seconds)"
 runs:
   using: "node20"
-  main: "dist/main.js"
+  main: "dist/action.js"
