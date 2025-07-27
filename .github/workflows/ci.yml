@@ -13,12 +13,13 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   test-and-coverage:
     name: JavaScript Tests
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
       - name: Checkout
