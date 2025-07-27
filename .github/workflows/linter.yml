@@ -5,7 +5,12 @@
 #     https://github.com/super-linter/super-linter
 name: Lint Codebase
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
