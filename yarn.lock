@@ -4673,6 +4673,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"make-coverage-badge@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "make-coverage-badge@npm:1.2.0"
+  dependencies:
+    mri: "npm:1.1.4"
+  bin:
+    make-coverage-badge: cli.js
+  checksum: 10c0/9504d85fc0864dcd623264eada0bba3638561c1264c78e4c0f7242c43ed5a0e923eddfba3bd8069a13bd1eee2298f166541f848743cae88a6478033ad91bed06
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^4.0.0":
   version: 4.0.0
   resolution: "make-dir@npm:4.0.0"
@@ -4880,6 +4891,13 @@ __metadata:
   bin:
     mkdirp: dist/cjs/src/bin.js
   checksum: 10c0/9f2b975e9246351f5e3a40dcfac99fcd0baa31fbfab615fe059fb11e51f10e4803c63de1f384c54d656e4db31d000e4767e9ef076a22e12a641357602e31d57d
+  languageName: node
+  linkType: hard
+
+"mri@npm:1.1.4":
+  version: 1.1.4
+  resolution: "mri@npm:1.1.4"
+  checksum: 10c0/eb577c2ef60385aa287afdac777e536996f4fd3144250c201097e7ec121568139d482c92cb9a512f90e428d6dc3e9ba8e9de89bc204424cb96f187a4bdc465c1
   languageName: node
   linkType: hard
 
@@ -6684,6 +6702,7 @@ __metadata:
     eslint-plugin-jest: "npm:^28.11.0"
     eslint-plugin-prettier: "npm:^5.2.6"
     jest: "npm:^29.7.0"
+    make-coverage-badge: "npm:^1.2.0"
     nock: "npm:^14.0.3"
     prettier: "npm:^3.5.3"
     prettier-eslint: "npm:^16.3.0"

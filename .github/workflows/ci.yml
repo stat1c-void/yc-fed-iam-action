@@ -41,6 +41,31 @@ jobs:
       - name: Test
         run: yarn run test
 
+      - name: Prepare for GitHub Pages deployment
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          mkdir -p ./.github/pages
+          yarn exec make-coverage-badge --output-path ./.github/pages/coverage.svg
+
+      - name: Upload static files as artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./.github/pages
+
+  deploy-gh-pages:
+    name: Deploy GH Pages
+    runs-on: ubuntu-latest
+    needs: test-and-coverage
+    if: ${{ github.event_name != 'pull_request' }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
   live-test:
     name: GitHub Actions Test
     runs-on: ubuntu-latest
