@@ -1,5 +1,9 @@
 # Get Yandex Cloud IAM token through federation
 
+![Coverage](https://stat1c-void.github.io/yc-fed-iam-action/coverage.svg)
+[![Lint Codebase](https://github.com/stat1c-void/yc-fed-iam-action/actions/workflows/linter.yml/badge.svg?branch=main)](https://github.com/stat1c-void/yc-fed-iam-action/actions/workflows/linter.yml)
+[![Continuous Integration](https://github.com/stat1c-void/yc-fed-iam-action/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stat1c-void/yc-fed-iam-action/actions/workflows/ci.yml)
+
 Use this action to get a Yandex Cloud service account IAM token through
 [Workload Identity Federation](https://yandex.cloud/en/docs/iam/operations/wlif/setup-wlif).
 This allows workflows to perform actions on Yandex Cloud resources on behalf of
