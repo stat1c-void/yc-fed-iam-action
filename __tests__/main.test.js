@@ -3,13 +3,47 @@ import nock from "nock";
 
 const originalEnv = { ...process.env };
 
+/**
+ * Stub ID token (HS256). Needs to be a decodable JWT because of logging.
+ *
+ * ```
+ * {
+ *    "iss": "stub-id-token-iss",
+ *    "iat": 1753697118,
+ *    "exp": 1785233120,
+ *    "aud": "stub-id-token-aud",
+ *    "sub": "stub-id-token-sub"
+ * }
+ * ```
+ */
+const stubIdToken =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdHViLWlkLXRva2VuLWlzcyIsImlhdCI6MTc1MzY5NzExOCwiZXhwIjoxNzg1MjMzMTIwLCJhdWQiOiJzdHViLWlkLXRva2VuLWF1ZCIsInN1YiI6InN0dWItaWQtdG9rZW4tc3ViIn0.peQeF30C3mtRwHO4j1HCH_i9qMJetmSE_YifnOqii_A";
+
+/**
+ * Stub Yandex Cloud token (HS256). Needs to be a decodable JWT because of logging.
+ *
+ * ```
+ * {
+ *    "iss": "stub-yc-token-iss",
+ *    "iat": 1753697118,
+ *    "exp": 1785233120,
+ *    "aud": "stub-yc-token-aud",
+ *    "sub": "stub-yc-token-sub"
+ * }
+ * ```
+ */
+const stubYCToken =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdHViLXljLXRva2VuLWlzcyIsImlhdCI6MTc1MzY5NzExOCwiZXhwIjoxNzg1MjMzMTIwLCJhdWQiOiJzdHViLXljLXRva2VuLWF1ZCIsInN1YiI6InN0dWIteWMtdG9rZW4tc3ViIn0.hCSqPuIrePiJhx-bIeZyuPYo0QLUgbqew1M17qWdma0";
+
 jest.unstable_mockModule("@actions/core", () => {
   /** @type {typeof import("@actions/core")} */
   const orgModule = jest.requireActual("@actions/core");
   return {
     __esModule: true,
     getInput: orgModule.getInput,
+    isDebug: jest.fn().mockReturnValue(false),
     error: jest.fn(),
+    debug: jest.fn(),
     setFailed: jest.fn(),
     getIDToken: jest.fn(),
     setOutput: jest.fn(),
@@ -51,10 +85,11 @@ const main = (await import("../src/main.js")).default;
 
 it("works properly in happy path", async () => {
   process.env["INPUT_SERVICE-ACCOUNT"] = "stub-sa";
-  core.getIDToken.mockReturnValueOnce("stub-id-token");
+  core.getIDToken.mockReturnValueOnce(stubIdToken);
+  core.isDebug.mockReturnValue(true);
 
-  const nockCtx = nockStdRequest("stub-sa", "stub-id-token").reply(200, {
-    access_token: "stub-iam-token",
+  const nockCtx = nockStdRequest("stub-sa", stubIdToken).reply(200, {
+    access_token: stubYCToken,
     token_type: "Bearer",
     expires_in: 500,
   });
@@ -62,9 +97,9 @@ it("works properly in happy path", async () => {
   await main();
 
   expect(core.setFailed).not.toHaveBeenCalled();
-  expect(core.setOutput).toHaveBeenNthCalledWith(1, "token", "stub-iam-token");
+  expect(core.setOutput).toHaveBeenNthCalledWith(1, "token", stubYCToken);
   expect(core.setOutput).toHaveBeenNthCalledWith(2, "expires-in", 500);
-  expect(core.setSecret).toHaveBeenCalledWith("stub-iam-token");
+  expect(core.setSecret).toHaveBeenCalledWith(stubYCToken);
   nockCtx.done();
 });
 

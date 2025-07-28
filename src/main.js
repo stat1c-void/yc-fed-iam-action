@@ -2,6 +2,7 @@
 import * as core from "@actions/core";
 import { HttpClient, MediaTypes } from "@actions/http-client";
 import * as bt from "banditypes";
+import { jwtDecode } from "jwt-decode";
 
 export default async function main() {
   try {
@@ -20,11 +21,14 @@ export default async function main() {
       throw err;
     }
 
+    logToken(idToken, "GitHub ID token");
     const tokenData = await getYcIamToken(idToken, serviceAccountId);
 
     core.setOutput("token", tokenData.token);
     core.setOutput("expires-in", tokenData.expiresIn);
     core.setSecret(tokenData.token);
+
+    logToken(tokenData.token, "Yandex Cloud token");
   } catch (error) {
     core.setFailed(String(error));
   }
@@ -92,6 +96,35 @@ function parseError(body) {
       errorCode: "malformed_error",
       errorDesc: `Failed to parse error body: ${err}`,
     };
+  }
+}
+
+/**
+ * @param {string} token
+ * @param {string} tokenName
+ */
+function logToken(token, tokenName) {
+  let header, payload;
+
+  try {
+    header = jwtDecode(token, { header: true });
+    payload = jwtDecode(token);
+  } catch (error) {
+    core.error(`Failed to decode JWT: ${tokenName}`);
+    return;
+  }
+
+  console.log(`Received ${tokenName}, details:`);
+  console.log(`Alg: ${header.alg}`);
+  console.log(`Iss: ${payload.iss}`);
+  console.log(`Aud: ${payload.aud}`);
+  console.log(`Sub: ${payload.sub}`);
+
+  if (core.isDebug()) {
+    const headerPretty = JSON.stringify(header, null, 2);
+    const payloadPretty = JSON.stringify(payload, null, 2);
+    core.debug(`Full header:\n${headerPretty}`);
+    core.debug(`Full payload:\n${payloadPretty}`);
   }
 }
 
