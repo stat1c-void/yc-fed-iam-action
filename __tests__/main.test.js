@@ -17,7 +17,7 @@ const originalEnv = { ...process.env };
  * ```
  */
 const stubIdToken =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdHViLWlkLXRva2VuLWlzcyIsImlhdCI6MTc1MzY5NzExOCwiZXhwIjoxNzg1MjMzMTIwLCJhdWQiOiJzdHViLWlkLXRva2VuLWF1ZCIsInN1YiI6InN0dWItaWQtdG9rZW4tc3ViIn0.peQeF30C3mtRwHO4j1HCH_i9qMJetmSE_YifnOqii_A";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdHViLWlkLXRva2VuLWlzcyIsImlhdCI6MTc1MzY5NzExOCwiZXhwIjoxNzg1MjMzMTIwLCJhdWQiOiJzdHViLWlkLXRva2VuLWF1ZCIsInN1YiI6InN0dWItaWQtdG9rZW4tc3ViIn0.peQeF30C3mtRwHO4j1HCH_i9qMJetmSE_YifnOqii_A"; // gitleaks:allow
 
 /**
  * Stub Yandex Cloud token (HS256). Needs to be a decodable JWT because of logging.
@@ -33,7 +33,7 @@ const stubIdToken =
  * ```
  */
 const stubYCToken =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdHViLXljLXRva2VuLWlzcyIsImlhdCI6MTc1MzY5NzExOCwiZXhwIjoxNzg1MjMzMTIwLCJhdWQiOiJzdHViLXljLXRva2VuLWF1ZCIsInN1YiI6InN0dWIteWMtdG9rZW4tc3ViIn0.hCSqPuIrePiJhx-bIeZyuPYo0QLUgbqew1M17qWdma0";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdHViLXljLXRva2VuLWlzcyIsImlhdCI6MTc1MzY5NzExOCwiZXhwIjoxNzg1MjMzMTIwLCJhdWQiOiJzdHViLXljLXRva2VuLWF1ZCIsInN1YiI6InN0dWIteWMtdG9rZW4tc3ViIn0.hCSqPuIrePiJhx-bIeZyuPYo0QLUgbqew1M17qWdma0"; // gitleaks:allow
 
 jest.unstable_mockModule("@actions/core", () => {
   /** @type {typeof import("@actions/core")} */
