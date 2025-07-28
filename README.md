@@ -1,5 +1,6 @@
 # Get Yandex Cloud IAM token through federation
 
+![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Coverage](https://stat1c-void.github.io/yc-fed-iam-action/coverage.svg)
 [![Lint Codebase](https://github.com/stat1c-void/yc-fed-iam-action/actions/workflows/linter.yml/badge.svg?branch=main)](https://github.com/stat1c-void/yc-fed-iam-action/actions/workflows/linter.yml)
 [![Continuous Integration](https://github.com/stat1c-void/yc-fed-iam-action/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stat1c-void/yc-fed-iam-action/actions/workflows/ci.yml)
@@ -33,10 +34,10 @@ customize `sub` claim - see below.
 
 ## Some limitations
 
-As of July 2025, the `sub` matching does not use patterns of any kind (i.e. glob
-or regex), so it's only possible to match static, pre-determined `sub` values.
+As of July 2025, `sub` matching does not use patterns of any kind (i.e. glob or
+regex), so it's only possible to match static, pre-determined `sub` values.
 
-However, it is possible to change `sub` claim (as of July 2025 - only possible
+However, it is possible to change `sub` claim (as of July 2025 only possible
 through GitHub REST API):
 [Customizing the subject claims for an organization or repository](https://docs.github.com/en/actions/reference/security/oidc#customizing-the-subject-claims-for-an-organization-or-repository)
 
