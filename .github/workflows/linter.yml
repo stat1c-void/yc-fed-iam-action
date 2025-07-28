@@ -35,6 +35,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: yarn
+
+      - name: Install Dependencies
+        run: yarn install --immutable
+
       - name: Lint Codebase
         id: super-linter
         uses: super-linter/super-linter/slim@v8
