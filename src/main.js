@@ -110,6 +110,7 @@ function logToken(token, tokenName) {
     header = jwtDecode(token, { header: true });
     payload = jwtDecode(token);
   } catch (error) {
+    console.error("failed to decode JWT:", tokenName, error);
     core.error(`Failed to decode JWT: ${tokenName}`);
     return;
   }
