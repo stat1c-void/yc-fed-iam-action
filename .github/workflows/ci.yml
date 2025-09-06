@@ -25,6 +25,8 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Enable corepack
         run: corepack enable
@@ -79,6 +81,8 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Test Local Action
         id: test-action
@@ -88,4 +92,6 @@ jobs:
 
       - name: Print Output
         run: |
-          echo "Expires-In: ${{ steps.test-action.outputs.expires-in }}"
+          echo "Expires-In: ${EXPIRES_IN}"
+        env:
+          EXPIRES_IN: ${{ steps.test-action.outputs.expires-in }}
