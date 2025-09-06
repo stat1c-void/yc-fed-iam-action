@@ -27360,8 +27360,7 @@ async function main() {
     coreExports.setOutput("token", tokenData.token);
     coreExports.setOutput("expires-in", tokenData.expiresIn);
     coreExports.setSecret(tokenData.token);
-
-    logToken(tokenData.token, "Yandex Cloud token");
+    // Yandex token is not a standard JWT, running logToken on it will result in a decoding error
   } catch (error) {
     coreExports.setFailed(String(error));
   }
