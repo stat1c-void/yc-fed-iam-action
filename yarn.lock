@@ -24,13 +24,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@actions/http-client@npm:^2.0.1, @actions/http-client@npm:^2.2.3":
+"@actions/http-client@npm:^2.0.1":
   version: 2.2.3
   resolution: "@actions/http-client@npm:2.2.3"
   dependencies:
     tunnel: "npm:^0.0.6"
     undici: "npm:^5.25.4"
   checksum: 10c0/13141b66a42aa4afd8c50f7479e13a5cdb5084ccb3c73ec48894b8029743389a3d2bf8cdc18e23fb70cd33995740526dd308815613907571e897c3aa1e5eada6
+  languageName: node
+  linkType: hard
+
+"@actions/http-client@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@actions/http-client@npm:3.0.0"
+  dependencies:
+    tunnel: "npm:^0.0.6"
+    undici: "npm:^5.28.5"
+  checksum: 10c0/2d4452c7dbf36c82ad9117c03c3f7a5c48be15aa5b01f17d0dc6b1eb580f3fac2127f5be33a627c1fbeb117e22db493aa760a0fcd62846cea7d914e702540fe3
   languageName: node
   linkType: hard
 
@@ -6354,7 +6364,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:^5.25.4":
+"undici@npm:^5.25.4, undici@npm:^5.28.5":
   version: 5.29.0
   resolution: "undici@npm:5.29.0"
   dependencies:
@@ -6696,7 +6706,7 @@ __metadata:
   resolution: "yc-fed-iam-action@workspace:."
   dependencies:
     "@actions/core": "npm:^1.11.1"
-    "@actions/http-client": "npm:^2.2.3"
+    "@actions/http-client": "npm:^3.0.0"
     "@eslint/compat": "npm:^1.2.8"
     "@jest/globals": "npm:^29.7.0"
     "@rollup/plugin-commonjs": "npm:^28.0.3"
