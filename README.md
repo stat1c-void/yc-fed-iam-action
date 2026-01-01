@@ -28,9 +28,9 @@ Yandex Cloud would need the following federation settings (as of July 2025):
 - Audience (aud): `https://github.com/<org-name>`
 - JWKS URL: `https://token.actions.githubusercontent.com/.well-known/jwks`
 - Subject (sub) examples:
-  * `repo:<org-name>/<repo-name>:ref:<ref-name>` (where `ref-name` is something like
-    `refs/heads/main`)
-  * `repo:<org-name>/<repo-name>:environment:<env-name>` (if deploy env is used)
+  - `repo:<org-name>/<repo-name>:ref:<ref-name>` (where `ref-name` is something
+    like `refs/heads/main`)
+  - `repo:<org-name>/<repo-name>:environment:<env-name>` (if deploy env is used)
 
 It's possible to customize `aud` value using action input. It's also possible to
 customize `sub` claim - see below.
