@@ -1,5 +1,6 @@
 import { afterAll, afterEach, expect, it, jest } from "@jest/globals";
 import nock from "nock";
+import { stubIdToken } from "./test_data.js";
 
 const originalEnv = { ...process.env };
 
@@ -9,6 +10,7 @@ jest.unstable_mockModule("@actions/core", () => {
   return {
     __esModule: true,
     getInput: orgModule.getInput,
+    isDebug: jest.fn().mockReturnValue(false),
     error: jest.fn(),
     setFailed: jest.fn(),
     getIDToken: jest.fn(),
@@ -79,7 +81,7 @@ it("passes audience to getIDToken", async () => {
 
 it("calls getYcIamToken and sets proper outputs", async () => {
   process.env["INPUT_SERVICE-ACCOUNT"] = "stub-sa";
-  core.getIDToken.mockReturnValueOnce("stub-token");
+  core.getIDToken.mockReturnValueOnce(stubIdToken);
 
   await main();
 

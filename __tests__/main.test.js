@@ -1,39 +1,8 @@
 import { afterAll, afterEach, describe, expect, it, jest } from "@jest/globals";
 import nock from "nock";
+import { stubIdToken, stubYCToken } from "./test_data.js";
 
 const originalEnv = { ...process.env };
-
-/**
- * Stub ID token (HS256). Needs to be a decodable JWT because of logging.
- *
- * ```
- * {
- *    "iss": "stub-id-token-iss",
- *    "iat": 1753697118,
- *    "exp": 1785233120,
- *    "aud": "stub-id-token-aud",
- *    "sub": "stub-id-token-sub"
- * }
- * ```
- */
-const stubIdToken =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdHViLWlkLXRva2VuLWlzcyIsImlhdCI6MTc1MzY5NzExOCwiZXhwIjoxNzg1MjMzMTIwLCJhdWQiOiJzdHViLWlkLXRva2VuLWF1ZCIsInN1YiI6InN0dWItaWQtdG9rZW4tc3ViIn0.peQeF30C3mtRwHO4j1HCH_i9qMJetmSE_YifnOqii_A"; // gitleaks:allow
-
-/**
- * Stub Yandex Cloud token (HS256). Needs to be a decodable JWT because of logging.
- *
- * ```
- * {
- *    "iss": "stub-yc-token-iss",
- *    "iat": 1753697118,
- *    "exp": 1785233120,
- *    "aud": "stub-yc-token-aud",
- *    "sub": "stub-yc-token-sub"
- * }
- * ```
- */
-const stubYCToken =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdHViLXljLXRva2VuLWlzcyIsImlhdCI6MTc1MzY5NzExOCwiZXhwIjoxNzg1MjMzMTIwLCJhdWQiOiJzdHViLXljLXRva2VuLWF1ZCIsInN1YiI6InN0dWIteWMtdG9rZW4tc3ViIn0.hCSqPuIrePiJhx-bIeZyuPYo0QLUgbqew1M17qWdma0"; // gitleaks:allow
 
 jest.unstable_mockModule("@actions/core", () => {
   /** @type {typeof import("@actions/core")} */
@@ -105,8 +74,8 @@ it("works properly in happy path", async () => {
 
 it("handles failed request", async () => {
   process.env["INPUT_SERVICE-ACCOUNT"] = "stub-sa";
-  core.getIDToken.mockReturnValueOnce("stub-id-token");
-  const nockCtx = nockStdRequest("stub-sa", "stub-id-token").replyWithError(
+  core.getIDToken.mockReturnValueOnce(stubIdToken);
+  const nockCtx = nockStdRequest("stub-sa", stubIdToken).replyWithError(
     "stub-network-error"
   );
 
@@ -122,8 +91,8 @@ describe.each(["invalid non-json error", { invalid: "schema" }])(
   (errData) => {
     it("handles malformed error reply", async () => {
       process.env["INPUT_SERVICE-ACCOUNT"] = "stub-sa";
-      core.getIDToken.mockReturnValueOnce("stub-id-token");
-      const nockCtx = nockStdRequest("stub-sa", "stub-id-token").reply(
+      core.getIDToken.mockReturnValueOnce(stubIdToken);
+      const nockCtx = nockStdRequest("stub-sa", stubIdToken).reply(
         400,
         errData
       );
@@ -145,8 +114,8 @@ describe.each(["invalid non-json error", { invalid: "schema" }])(
 
 it("handles error reply", async () => {
   process.env["INPUT_SERVICE-ACCOUNT"] = "stub-sa";
-  core.getIDToken.mockReturnValueOnce("stub-id-token");
-  const nockCtx = nockStdRequest("stub-sa", "stub-id-token").reply(400, {
+  core.getIDToken.mockReturnValueOnce(stubIdToken);
+  const nockCtx = nockStdRequest("stub-sa", stubIdToken).reply(400, {
     error: "stub-err-code",
     error_description: "stub-err-desc",
   });
@@ -169,8 +138,8 @@ describe.each([{ foo: "bar" }, { access_token: "123" }, { expires_in: 321 }])(
   (replyData) => {
     it("handles malformed success reply", async () => {
       process.env["INPUT_SERVICE-ACCOUNT"] = "stub-sa";
-      core.getIDToken.mockReturnValueOnce("stub-id-token");
-      const nockCtx = nockStdRequest("stub-sa", "stub-id-token").reply(
+      core.getIDToken.mockReturnValueOnce(stubIdToken);
+      const nockCtx = nockStdRequest("stub-sa", stubIdToken).reply(
         200,
         replyData
       );
