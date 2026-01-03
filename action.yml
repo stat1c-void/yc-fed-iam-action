@@ -1,5 +1,8 @@
 name: "Yandex Cloud Federated IAM Token"
 description: "Get Yandex Cloud IAM token through service account federation"
+branding:
+  icon: unlock
+  color: blue
 inputs:
   service-account:
     description: "Yandex Cloud service account ID"
