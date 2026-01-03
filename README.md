@@ -70,7 +70,7 @@ jobs:
     steps:
       - name: Get Yandex IAM token
         id: ya_iam_token
-        uses: stat1c-void/yc-fed-iam-action@main
+        uses: stat1c-void/yc-fed-iam-action@v1
         with:
           service-account: <some-account-id>
 
