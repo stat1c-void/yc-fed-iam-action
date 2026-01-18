@@ -35,8 +35,8 @@
   },
   "packageManager": "yarn@4.8.1",
   "dependencies": {
-    "@actions/core": "^2.0.1",
-    "@actions/http-client": "^3.0.0",
+    "@actions/core": "^2.0.2",
+    "@actions/http-client": "^3.0.1",
     "banditypes": "^0.3.0",
     "jwt-decode": "^4.0.0"
   },
