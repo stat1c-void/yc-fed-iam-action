@@ -1514,9 +1514,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-x64-gnu@npm:4.55.1, @rollup/rollup-linux-x64-gnu@npm:^4.55.1":
+"@rollup/rollup-linux-x64-gnu@npm:4.55.1":
   version: 4.55.1
   resolution: "@rollup/rollup-linux-x64-gnu@npm:4.55.1"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-x64-gnu@npm:^4.55.3":
+  version: 4.57.0
+  resolution: "@rollup/rollup-linux-x64-gnu@npm:4.57.0"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
@@ -7050,7 +7057,7 @@ __metadata:
     "@jest/globals": "npm:^30.2.0"
     "@rollup/plugin-commonjs": "npm:^29.0.0"
     "@rollup/plugin-node-resolve": "npm:^16.0.3"
-    "@rollup/rollup-linux-x64-gnu": "npm:^4.55.1"
+    "@rollup/rollup-linux-x64-gnu": "npm:^4.55.3"
     banditypes: "npm:^0.3.0"
     eslint: "npm:^9.39.2"
     eslint-config-prettier: "npm:^10.1.8"
