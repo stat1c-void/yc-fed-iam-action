@@ -31,7 +31,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6 # zizmor: ignore[unpinned-uses] trusted source
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -40,7 +40,7 @@ jobs:
         run: corepack enable
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v6 # zizmor: ignore[unpinned-uses] trusted source
         with:
           node-version: "20"
           cache: yarn
@@ -50,7 +50,7 @@ jobs:
 
       - name: Lint Codebase
         id: super-linter
-        uses: super-linter/super-linter/slim@v8 # zizmor: ignore[unpinned-uses]
+        uses: super-linter/super-linter/slim@v8 # zizmor: ignore[unpinned-uses] trusted source
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main
