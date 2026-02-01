@@ -4,12 +4,11 @@ import { stubIdToken, stubYCToken } from "./test_data.js";
 
 const originalEnv = { ...process.env };
 
+const orgCoreModule = await import("@actions/core");
 jest.unstable_mockModule("@actions/core", () => {
-  /** @type {typeof import("@actions/core")} */
-  const orgModule = jest.requireActual("@actions/core");
   return {
     __esModule: true,
-    getInput: orgModule.getInput,
+    getInput: orgCoreModule.getInput,
     isDebug: jest.fn().mockReturnValue(false),
     error: jest.fn(),
     debug: jest.fn(),
