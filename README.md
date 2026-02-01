@@ -51,7 +51,7 @@ Inputs:
 - `service-account` (**required**) - Yandex Cloud service account ID
 - `audience` (optional) - custom `aud` claim
 
-Outpus:
+Outputs:
 
 - `token` - token value
 - `expires-in` - remaining token time-to-live in seconds
