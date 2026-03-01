@@ -21,7 +21,7 @@ All commands should be run with the project's package manager (Yarn 4.x). Use
 - **Lint**: `yarn run lint` - Runs ESLint with strict rules
 - **Format**: `yarn run format:write` - Auto-formats with Prettier
 - **Format check**: `yarn run format:check` - Validates formatting without changes
-- **Build/package**: `yarn package` - Bundles with Rollup to `dist/action.js`
+- **Build/package**: `yarn run package` - Bundles with Rollup to `dist/action.js`
 - **Test**: `yarn run test` - Runs Jest with coverage
 
 ### Running Single Tests
