@@ -6,11 +6,7 @@ const jestConfig = {
   collectCoverage: true,
   collectCoverageFrom: ["./src/**"],
   coverageDirectory: "./coverage",
-  coveragePathIgnorePatterns: [
-    "/node_modules/",
-    "/dist/",
-    "<rootDir>/src/action.js",
-  ],
+  coveragePathIgnorePatterns: ["/node_modules/", "/dist/", "<rootDir>/src/action.js"],
   coverageReporters: ["json-summary", "text", "lcov"],
   // Uncomment the below lines if you would like to enforce a coverage threshold
   // for your action. This will fail the build if the coverage is below the

@@ -74,9 +74,7 @@ it("works properly in happy path", async () => {
 it("handles failed request", async () => {
   process.env["INPUT_SERVICE-ACCOUNT"] = "stub-sa";
   core.getIDToken.mockReturnValueOnce(stubIdToken);
-  const nockCtx = nockStdRequest("stub-sa", stubIdToken).replyWithError(
-    "stub-network-error"
-  );
+  const nockCtx = nockStdRequest("stub-sa", stubIdToken).replyWithError("stub-network-error");
 
   await main();
 
@@ -91,10 +89,7 @@ describe.each(["invalid non-json error", { invalid: "schema" }])(
     it("handles malformed error reply", async () => {
       process.env["INPUT_SERVICE-ACCOUNT"] = "stub-sa";
       core.getIDToken.mockReturnValueOnce(stubIdToken);
-      const nockCtx = nockStdRequest("stub-sa", stubIdToken).reply(
-        400,
-        errData
-      );
+      const nockCtx = nockStdRequest("stub-sa", stubIdToken).reply(400, errData);
 
       await main();
 
@@ -138,17 +133,12 @@ describe.each([{ foo: "bar" }, { access_token: "123" }, { expires_in: 321 }])(
     it("handles malformed success reply", async () => {
       process.env["INPUT_SERVICE-ACCOUNT"] = "stub-sa";
       core.getIDToken.mockReturnValueOnce(stubIdToken);
-      const nockCtx = nockStdRequest("stub-sa", stubIdToken).reply(
-        200,
-        replyData
-      );
+      const nockCtx = nockStdRequest("stub-sa", stubIdToken).reply(200, replyData);
 
       await main();
 
       expect(core.setFailed).toHaveBeenCalled();
-      expect(core.setFailed.mock.lastCall[0]).toMatch(
-        /Failed to parse response/
-      );
+      expect(core.setFailed.mock.lastCall[0]).toMatch(/Failed to parse response/);
       nockCtx.done();
     });
   }
