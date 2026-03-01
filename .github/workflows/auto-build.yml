@@ -21,6 +21,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
+          # explicit ref, by default GitHub Actions checks out in detached HEAD mode
+          ref: ${{ github.head_ref }}
           fetch-depth: 0
           persist-credentials: true
 
@@ -39,14 +41,9 @@ jobs:
       - name: Build dist/ Directory
         run: yarn run package
 
-      - name: Configure Git identity
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Commit built files
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
         with:
-          commit_message: "chore: update dist [skip ci]"
+          commit_message: "chore: build js dist [skip ci]"
           branch: ${{ github.head_ref }}
           file_pattern: dist/**
