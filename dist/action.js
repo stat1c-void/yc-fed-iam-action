@@ -28988,14 +28988,10 @@ async function getYcIamToken(idToken, servAccId) {
   };
   const reqBody = new URLSearchParams(reqParams).toString();
 
-  const resp = await client.post(
-    "https://auth.yandex.cloud/oauth/token",
-    reqBody,
-    {
-      accept: MediaTypes.ApplicationJson,
-      "content-type": "application/x-www-form-urlencoded",
-    }
-  );
+  const resp = await client.post("https://auth.yandex.cloud/oauth/token", reqBody, {
+    accept: MediaTypes.ApplicationJson,
+    "content-type": "application/x-www-form-urlencoded",
+  });
   const body = await resp.readBody();
 
   if (resp.message.statusCode !== 200) {
