@@ -29,7 +29,10 @@
   "scripts": {
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint .",
+    "lint": "yarn run lint:eslint && yarn run lint:md && yarn run lint:editorconfig",
+    "lint:eslint": "eslint .",
+    "lint:md": "markdownlint \"**/*.md\" --config .markdown-lint.yml --ignore node_modules --ignore dist --ignore coverage",
+    "lint:editorconfig": "editorconfig-checker -exclude 'dist/.*'",
     "package": "rollup --config rollup.config.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 jest"
   },
@@ -42,9 +45,11 @@
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.2",
+    "@eslint/json": "^1.0.1",
     "@jest/globals": "^30.2.0",
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
+    "editorconfig-checker": "^6.1.1",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
@@ -52,6 +57,7 @@
     "eslint-plugin-prettier": "^5.5.5",
     "jest": "^30.2.0",
     "make-coverage-badge": "^1.2.0",
+    "markdownlint-cli": "^0.48.0",
     "nock": "^14.0.10",
     "prettier": "^3.8.1",
     "prettier-eslint": "^16.4.2",

@@ -1,8 +1,8 @@
-# This workflow will lint the entire codebase using the
-# `super-linter/super-linter` action.
+# This workflow will lint the entire codebase using a hybrid approach:
+# - yarn-based linting for JS, Markdown, EditorConfig (via yarn run lint)
+# - dedicated GitHub Actions for third-party tools (yamllint, checkov, gitleaks, etc.)
 #
-# For more information, see the super-linter repository:
-#     https://github.com/super-linter/super-linter
+# This replaces super-linter for better performance and maintainability.
 name: Lint Codebase
 
 concurrency:
@@ -24,8 +24,8 @@ permissions:
   statuses: write
 
 jobs:
-  lint:
-    name: Lint Codebase
+  yarn-lint:
+    name: Yarn-based Linters
     runs-on: ubuntu-latest
 
     steps:
@@ -48,26 +48,48 @@ jobs:
       - name: Install Dependencies
         run: yarn install --immutable
 
-      - name: Lint Codebase
-        id: super-linter
-        uses: super-linter/super-linter/slim@v8
+      - name: Run Yarn Lint
+        run: yarn run lint
+
+  third-party-lint:
+    name: Third-party Linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check workflow files
+        run: |
+          bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+          ./actionlint -color
+        shell: bash
+
+      - name: Validate GitHub Actions security (zizmor)
+        uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
+        with:
+          advanced-security: false
+          annotations: true
+
+      - name: Scan for secrets (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BRANCH: main
-          FILTER_REGEX_EXCLUDE: dist/**/*
-          LINTER_RULES_PATH: .
-          VALIDATE_ALL_CODEBASE: true
-          VALIDATE_CHECKOV: true
-          VALIDATE_EDITORCONFIG: true
-          VALIDATE_GIT_MERGE_CONFLICT_MARKERS: true
-          VALIDATE_GITHUB_ACTIONS: true
-          VALIDATE_GITHUB_ACTIONS_ZIZMOR: true
-          VALIDATE_GITLEAKS: true
-          VALIDATE_JAVASCRIPT_ES: true
-          VALIDATE_JAVASCRIPT_PRETTIER: true
-          VALIDATE_JSON: true
-          VALIDATE_JSON_PRETTIER: true
-          VALIDATE_MARKDOWN: true
-          VALIDATE_MARKDOWN_PRETTIER: true
-          VALIDATE_YAML: true
-          VALIDATE_YAML_PRETTIER: true
+
+      - name: Infrastructure as Code security (checkov)
+        uses: bridgecrewio/checkov-action@v12.3000.0
+        with:
+          directory: .
+          framework: github_actions,yaml
+          skip_path: dist/ coverage/ node_modules/
+
+      - name: YAML lint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: .
+          config_file: .yaml-lint.yml
+          exclude: ^(dist|coverage|node_modules)/
