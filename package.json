@@ -29,10 +29,11 @@
   "scripts": {
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "yarn run lint:eslint && yarn run lint:md && yarn run lint:editorconfig",
+    "lint": "yarn run lint:eslint && yarn run lint:md && yarn run lint:editorconfig && yarn run lint:actionlint",
     "lint:eslint": "eslint .",
     "lint:md": "markdownlint \"**/*.md\" --config .markdown-lint.yml --ignore node_modules --ignore dist --ignore coverage",
     "lint:editorconfig": "editorconfig-checker -exclude 'dist/.*'",
+    "lint:actionlint": "which actionlint >/dev/null 2>&1 && actionlint || echo '⚠️ actionlint not found, skipping'",
     "package": "rollup --config rollup.config.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 jest"
   },
