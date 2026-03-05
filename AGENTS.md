@@ -17,7 +17,7 @@ scripts.
 ### Standard Commands
 
 - **Install dependencies**: `yarn install` (uses Yarn modern/berry)
-- **Lint**: `yarn run lint` - Runs ESLint with strict rules
+- **Lint**: `yarn run lint` - Runs linters
 - **Format**: `yarn run format:write` - Auto-formats with Prettier
 - **Format check**: `yarn run format:check` - Validates formatting without changes
 - **Build/package**: `yarn run package` - Bundles with Rollup to `dist/action.js`
@@ -204,3 +204,11 @@ async function getToken(idToken, servAccId) { ... }
 - Dev: `jest`, `nock`, `eslint*`, `prettier`, `rollup` and plugins
 
 Do not introduce new dependencies without discussion. Prefer built-in Node.js APIs when possible.
+
+---
+
+## General
+
+Use context7 to provide the most up-to-date documentation and examples directly from the source.
+
+Also you can use web search if needed.
