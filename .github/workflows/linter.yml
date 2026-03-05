@@ -76,19 +76,19 @@ jobs:
           annotations: true
 
       - name: Scan for secrets (gitleaks)
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@dcedce43c6f43de0b836d1fe38946645c9c638dc # v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Infrastructure as Code security (checkov)
-        uses: bridgecrewio/checkov-action@v12.3000.0
+        uses: bridgecrewio/checkov-action@99022a173575a81ccfcab2d354584832a0b1cc06 # v12.3000.0
         with:
           directory: .
           framework: github_actions,yaml
           skip_path: dist/ coverage/ node_modules/
 
       - name: YAML lint
-        uses: ibiqlik/action-yamllint@v3
+        uses: ibiqlik/action-yamllint@ae1abb2821b567e96742aa776f7b62c9b6a26bc8 # v3
         with:
           file_or_dir: .
           config_file: .yaml-lint.yml
