@@ -1,5 +1,5 @@
 # This workflow will lint the entire codebase using a hybrid approach:
-# - yarn-based linting for JS, Markdown, EditorConfig (via yarn run lint)
+# - yarn-based linting (via yarn run lint)
 # - dedicated GitHub Actions for third-party tools (yamllint, checkov, gitleaks, etc.)
 #
 # This replaces super-linter for better performance and maintainability.

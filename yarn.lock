@@ -2695,16 +2695,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"editorconfig-checker@npm:^6.1.1":
-  version: 6.1.1
-  resolution: "editorconfig-checker@npm:6.1.1"
-  bin:
-    ec: dist/index.js
-    editorconfig-checker: dist/index.js
-  checksum: 10c0/0a46ce93e2821041c4b4bbf2ab9dc30e1b4eb03d3f20e5b14bbe45767f6f2aafd5e1310ea737c15402d8e193f702a421a814041e072584250e8a7d5e63d83741
-  languageName: node
-  linkType: hard
-
 "electron-to-chromium@npm:^1.5.73":
   version: 1.5.133
   resolution: "electron-to-chromium@npm:1.5.133"
@@ -7326,7 +7316,6 @@ __metadata:
     "@rollup/plugin-node-resolve": "npm:^16.0.3"
     "@rollup/rollup-linux-x64-gnu": "npm:^4.60.1"
     banditypes: "npm:^0.3.0"
-    editorconfig-checker: "npm:^6.1.1"
     eslint: "npm:^9.39.4"
     eslint-config-prettier: "npm:^10.1.8"
     eslint-plugin-import: "npm:^2.32.0"
