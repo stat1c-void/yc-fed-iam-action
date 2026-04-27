@@ -144,7 +144,8 @@ function parseResponse(body) {
     const data = validateResponse(JSON.parse(body));
     return { token: data.access_token, expiresIn: data.expires_in };
   } catch (err) {
-    throw new Error(`Failed to parse response: ${err}`);
+    // noinspection JSCheckFunctionSignatures
+    throw new Error(`Failed to parse response: ${err}`, { cause: err });
   }
 }
 
