@@ -28,26 +28,28 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Enable corepack
-        run: corepack enable
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: "20"
-          cache: yarn
+          cache: pnpm
 
       - name: Install Dependencies
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
 
       - name: Test
-        run: yarn run test
+        run: pnpm run test
 
       - name: Prepare for GitHub Pages deployment
         if: ${{ github.event_name != 'pull_request' }}
         run: |
           mkdir -p ./.github/pages
-          yarn exec make-coverage-badge --output-path ./.github/pages/coverage.svg
+          pnpm exec make-coverage-badge --output-path ./.github/pages/coverage.svg
 
       - name: Upload static files as artifact
         if: ${{ github.event_name != 'pull_request' }}

@@ -29,14 +29,13 @@
   "scripts": {
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "yarn run lint:eslint && yarn run lint:md && yarn run lint:actionlint",
+    "lint": "pnpm run lint:eslint && pnpm run lint:md && pnpm run lint:actionlint",
     "lint:eslint": "eslint .",
     "lint:md": "markdownlint \"**/*.md\" --config .markdown-lint.yml --ignore node_modules --ignore dist --ignore coverage",
     "lint:actionlint": "which actionlint >/dev/null 2>&1 && actionlint || echo '⚠️ actionlint not found, skipping'",
     "package": "rollup --config rollup.config.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 jest"
   },
-  "packageManager": "yarn@4.8.1",
   "dependencies": {
     "@actions/core": "^3.0.0",
     "@actions/http-client": "^4.0.0",
@@ -64,5 +63,6 @@
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.60.1"
-  }
+  },
+  "packageManager": "pnpm@10.33.2+sha512.a90faf6feeab71ad6c6e57f94e0fe1a12f5dcc22cd754db40ae9593eb6a3e0b6b12e3540218bb37ae083404b1f2ce6db2a4121e979829b4aff94b99f49da1cf8"
 }

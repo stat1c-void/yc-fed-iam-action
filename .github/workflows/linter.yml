@@ -1,5 +1,5 @@
 # This workflow will lint the entire codebase using a hybrid approach:
-# - yarn-based linting (via yarn run lint)
+# - pnpm-based linting (via pnpm run lint)
 # - dedicated GitHub Actions for third-party tools (yamllint, checkov, gitleaks, etc.)
 #
 # This replaces super-linter for better performance and maintainability.
@@ -23,8 +23,8 @@ permissions:
   packages: read
 
 jobs:
-  yarn-lint:
-    name: Yarn-based Linters
+  pnpm-lint:
+    name: pnpm-based Linters
     runs-on: ubuntu-latest
 
     steps:
@@ -35,20 +35,22 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Enable corepack
-        run: corepack enable
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: "20"
-          cache: yarn
+          cache: pnpm
 
       - name: Install Dependencies
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
 
-      - name: Run Yarn Lint
-        run: yarn run lint
+      - name: Run pnpm Lint
+        run: pnpm run lint
 
   third-party-lint:
     name: Third-party Linters

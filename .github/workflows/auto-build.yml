@@ -26,20 +26,22 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
-      - name: Enable corepack
-        run: corepack enable
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: "20"
-          cache: yarn
+          cache: pnpm
 
       - name: Install Dependencies
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
 
       - name: Build dist/ Directory
-        run: yarn run package
+        run: pnpm run package
 
       - name: Commit built files
         # yamllint disable-line rule:line-length
