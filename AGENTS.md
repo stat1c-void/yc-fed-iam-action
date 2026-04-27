@@ -180,8 +180,7 @@ async function getToken(idToken, servAccId) { ... }
 ## Tooling Configuration
 
 - **Prettier**: `.prettierrc.yml` (version 3.x)
-- **ESLint**: `eslint.config.mjs` using flat config; extends eslint:recommended,
-  plugin:jest/recommended, plugin:prettier/recommended
+- **ESLint**: `eslint.config.mjs` using flat config; uses `@eslint/js` and `eslint-plugin-jest`
 - **Rollup**: `rollup.config.js` bundles to ESM format with sourcemaps
 - **Jest**: `jest.config.js` uses `testEnvironment: "node"`, `transform: {}` for ESM
 

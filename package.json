@@ -29,7 +29,7 @@
   "scripts": {
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "pnpm run lint:eslint && pnpm run lint:md && pnpm run lint:actionlint",
+    "lint": "pnpm run lint:eslint && pnpm run lint:md && pnpm run lint:actionlint && pnpm run format:check",
     "lint:eslint": "eslint .",
     "lint:md": "markdownlint \"**/*.md\" --config .markdown-lint.yml --ignore node_modules --ignore dist --ignore coverage",
     "lint:actionlint": "which actionlint >/dev/null 2>&1 && actionlint || echo '⚠️ actionlint not found, skipping'",
@@ -51,17 +51,14 @@
     "@rollup/plugin-commonjs": "^29.0.2",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "eslint": "^10.2.1",
-    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import-x": "^4.16.2",
     "eslint-plugin-jest": "^29.15.1",
-    "eslint-plugin-prettier": "^5.5.5",
     "globals": "^17.5.0",
     "jest": "^30.3.0",
     "make-coverage-badge": "^1.2.0",
     "markdownlint-cli": "^0.48.0",
     "nock": "^14.0.11",
     "prettier": "^3.8.1",
-    "prettier-eslint": "^16.4.2",
     "rollup": "^4.60.1"
   },
   "optionalDependencies": {
