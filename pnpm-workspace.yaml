@@ -1,0 +1,6 @@
+allowBuilds:
+  unrs-resolver: true
+publicHoistPattern:
+  - "*eslint*"
+  - "*prettier*"
+  - globals
