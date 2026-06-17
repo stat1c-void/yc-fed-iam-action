@@ -69,7 +69,8 @@ jobs:
     steps:
       - name: Get Yandex IAM token
         id: ya_iam_token
-        uses: stat1c-void/yc-fed-iam-action@v1
+        uses: stat1c-void/yc-fed-iam-action@v1.0.5 # use full version tag or pin hash
+                                                   # releases 1.0.5 and later are immutable
         with:
           service-account: <some-account-id>
 
