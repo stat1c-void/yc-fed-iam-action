@@ -16,5 +16,5 @@ outputs:
   expires-in:
     description: "Remaining token time-to-live (seconds)"
 runs:
-  using: "node20"
+  using: node24
   main: "dist/action.js"
