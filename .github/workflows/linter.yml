@@ -63,12 +63,7 @@ jobs:
           persist-credentials: false
 
       - name: Check workflow files (actionlint)
-        # yamllint disable rule:line-length
-        run: |
-          bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
-          ./actionlint -color
-        # yamllint enable rule:line-length
-        shell: bash
+        uses: kjanat/actionlint@08bb2c4f0d039744455b87aef1c647fb8b66d37b # v1.17.0
 
       - name: yamllint
         run: |
