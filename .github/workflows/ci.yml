@@ -86,7 +86,7 @@ jobs:
 
       - name: Test Local Action
         id: test-action
-        uses: ./
+        uses: ./ # zizmor: ignore[self-repository] Testing local action within a protected environment is intentional
         with:
           service-account: ${{ secrets.TEST_SERVICE_ACCOUNT_ID }}
 
